@@ -1,11 +1,11 @@
-function ExpenseItem() {
+import "./ExpenseItem.css"
+function ExpenseItem(props) {
   return (
     <div>
-      <div>
-        <p>Food rs 10</p>
-        <p>Petrol rs 100</p>
-        <p>Movies rs 1000</p>
-      </div>
+        <div>{props.title+"  "}  
+        {props.amount +"  "}  
+        {props.date.toISOString()+"  "}
+        {props.locationofexpadituer}</div>
     </div>
   );
 }
