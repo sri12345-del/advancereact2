@@ -1,43 +1,27 @@
 //import logo from './logo.svg';
 import "./App.css";
-import ExpenseItem from "./component/ExpenseItem";
-
-function App() {
-  let expenvearr = [
+import ExpenseItem from "./component/expensess/ExpenseItem";
+const App=()=> {
+  let expensearr = [
     {
       title: "car insurance",
-      amount: 10000,
-      date: new Date(2022, 2, 3),
-      expadituer:'bangalore'
-    },
-    {
-      title: "bike insurance",
-      amount: 5000,
-      date: new Date(2022, 3, 2),
-      expadituer:'karnataka'
+      amount: 500,
+      date: new Date(2022, 3, 4),
+      location:'bangalore'
     },
   ];
-  
 
   return (
-   
     <div className="App">
       <header className="App-header">
         <ExpenseItem
-          title={expenvearr[0].title}
-          amount={expenvearr[0].amount}
-          date={expenvearr[0].date}
-          locationofexpadituer={expenvearr[0].expadituer}
-        ></ExpenseItem>
-         <ExpenseItem
-          title={expenvearr[1].title}
-          amount={expenvearr[1].amount}
-          date={expenvearr[1].date}
-          locationofexpadituer={expenvearr[1].expadituer}
-        ></ExpenseItem>
+          title={expensearr[0].title}
+          amount={expensearr[0].amount}
+          date={expensearr[0].date}
+          location={expensearr[0].location}
+        />
       </header>
     </div>
-    
   );
 }
 
