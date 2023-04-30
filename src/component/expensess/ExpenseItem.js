@@ -2,11 +2,8 @@
 import Expensedetail from "./Expensedetail";
 import Expensedate from "./Expensedate";
 const ExpenseItem=(props) => {
-  const value=()=>{
-    const expense=document.getElementById('root')
-    const div=expense.firstElementChild
-    console.log(expense.remove(div))
-    
+  const value=(e)=>{
+    e.target.parentNode.remove()
   }
   return (
     <div className="expense-item">
