@@ -1,9 +1,7 @@
 const Expensedetail=(props)=>{
   return (
     <div>
-      <div>{props.title}</div>
-      <div>{props.amount}</div>
-      <div>{props.location}</div>
+      <div>{props.title} {props.amount}$ {props.location}</div>
     </div>
     
   );

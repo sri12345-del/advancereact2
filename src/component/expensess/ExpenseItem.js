@@ -1,15 +1,14 @@
 //import "./ExpenseItem.css";
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import Expensedetail from "./Expensedetail";
 import Expensedate from "./Expensedate";
-const ExpenseItem=(props) => {
-  let  [amount, setTitle]=useState(props.amount)
- const value=()=>{
-setTitle(900);
-console.log(amount)
- }
- 
-  
+const ExpenseItem = (props) => {
+  let [amount, setTitle] = useState(props.amount);
+  const value = () => {
+    setTitle(100);
+    console.log(amount);
+  };
+
   return (
     <div className="expense-item">
       <Expensedate date={props.date} />
@@ -21,5 +20,5 @@ console.log(amount)
       <button onClick={value}>delete expense</button>
     </div>
   );
-}
+};
 export default ExpenseItem;
