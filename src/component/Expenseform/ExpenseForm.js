@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function ExpenseForm() {
+const ExpenseForm = (props) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
@@ -20,21 +20,32 @@ function ExpenseForm() {
       amount: amount,
       date: new Date(date),
     };
-    console.log(obj)
+    props.onsavedata(obj);
+    setTitle("");
+    setAmount("");
+    setDate("");
   };
   return (
     <div>
       <form onSubmit={storevalue}>
         <label>Expense title: </label>
-        <input type="text" id="title" onChange={titlevalue}></input>
+        <input
+          type="text"
+          value={title}
+          onChange={titlevalue}
+        ></input>
         <label>Expense amount: $ </label>
-        <input type="amount" id="amount" onChange={amountvalue}></input>
+        <input
+          type="amount"
+          value={amount}
+          onChange={amountvalue}
+        ></input>
         <label>Expense date: </label>
-        <input type="date" id="date" onChange={datevalue}></input>
+        <input type="date" value={date} onChange={datevalue}></input>
         <button type="submit">Submit</button>
       </form>
     </div>
   );
-}
+};
 
 export default ExpenseForm;

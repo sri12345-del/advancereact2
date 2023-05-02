@@ -1,3 +1,4 @@
+import React from "react";
 const Expensedetail=(props)=>{
   return (
     <div>
