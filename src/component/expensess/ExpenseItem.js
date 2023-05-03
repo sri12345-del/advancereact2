@@ -7,6 +7,7 @@ const ExpenseItem = (props) => {
   const value = () => {
     setTitle(100);
     console.log(amount);
+    console.log(1)
   };
 
   return (
@@ -15,7 +16,6 @@ const ExpenseItem = (props) => {
       <Expensedetail
         title={props.title}
         amount={amount}
-        location={props.location}
       />
       <button onClick={value}>delete expense</button>
     </div>

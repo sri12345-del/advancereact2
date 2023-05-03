@@ -6,25 +6,24 @@ import Expenses from "./component/Expensess/Expenses";
 const App = () => {
   const AddeventHandler = (newobj) => {
    console.log(newobj)
-  };
+  }
   const expensearr = [
     {
       title: "car insurance",
       amount: 500,
       date: new Date(2022, 3, 4),
-      location: "bangalore",
     },
     {
       title: "bike insurance",
       amount: 5000,
       date: new Date(2023, 3, 4),
-      location: "karnataka",
     },
   ];
   return (
     <div>
       <Newexpense onaddexpense={AddeventHandler} />
       <Expenses items={expensearr} />
+      
     </div>
   );
 };
