@@ -29,7 +29,6 @@ const App = () => {
       <Newexpense onaddexpense={AddeventHandler} />
       <Expenses items={expense} />
     </div>
-
   );
 };
 
