@@ -3,8 +3,7 @@ const Expensedetail=(props)=>{
   return (
     <div>
       {props.title} {props.amount}$
-    </div>
-    
+    </div>  
   );
 }
 

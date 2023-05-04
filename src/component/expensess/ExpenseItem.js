@@ -7,6 +7,7 @@ const ExpenseItem = (props) => {
     <div className="expense-item">
       <Expensedate date={props.date} />
       <Expensedetail title={props.title} amount={props.amount} />
+
     </div>
   );
 };
