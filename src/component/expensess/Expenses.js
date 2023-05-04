@@ -24,7 +24,6 @@ const Expenses = (props) => {
           />
         ))}
       </div>
-import React, {useState} from "react";
     </div>
   );
 };
