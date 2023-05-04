@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> 7f549ed1c0046f2a86dedd3ba027584506c42792
 const ExpenseFilter=(props)=>{
     const dropdownchangehandler=(event)=>{
       props.onchangefilter(event.target.value)
