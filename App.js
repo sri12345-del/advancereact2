@@ -1,21 +1,26 @@
-import Mainform from "./Components/Inputform/Mainform";
-import MainInputlist from "./Components/Inputlist/MainInputlist";
-import React, { useState } from "react";
+import React, { useState ,Fragment} from "react";
 
-const App = () => {
-  const [datalist,setdatalist]=useState([])
-  const datahandler = (obj) => {
-    setdatalist(exp=>{
-      return [obj, ...exp]
-    })
-    
+import AddUser from "./components/Users/AddUser";
+import UsersList from "./components/Users/UsersList";
+
+function App() {
+  const [usersList, setUsersList] = useState([]);
+
+  const addUserHandler = (uName, uAge) => {
+    setUsersList((prevUsersList) => {
+      return [
+        ...prevUsersList,
+        { name: uName, age: uAge, id: Math.random().toString() },
+      ];
+    });
   };
 
   return (
-    <div>
-      <Mainform items={datahandler}></Mainform>
-      <MainInputlist listitem={datalist}></MainInputlist>
-    </div>
+    <Fragment>
+      <AddUser onAddUser={addUserHandler} />
+      <UsersList users={usersList} />
+    </Fragment>
   );
-};
+}
+
 export default App;
