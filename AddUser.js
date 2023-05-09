@@ -1,43 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from "react";
 
-import Card from '../UI/Card';
-import Button from '../UI/Button';
-import ErrorModal from '../UI/ErrorModal';
-import classes from './AddUser.module.css';
-import Wrapper from '../wrapper/Wrapper';
+import Card from "../UI/Card";
+import Button from "../UI/Button";
+import ErrorModal from "../UI/ErrorModal";
+import classes from "./AddUser.module.css";
+import Wrapper from "../wrapper/Wrapper";
 
 const AddUser = (props) => {
-  const [enteredUsername, setEnteredUsername] = useState('');
-  const [enteredAge, setEnteredAge] = useState('');
   const [error, setError] = useState();
+  const namevalue = useRef();
+  const agevalue = useRef();
+  const collegename=useRef();
 
   const addUserHandler = (event) => {
     event.preventDefault();
-    if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+    let nameuservalue = namevalue.current.value;
+    let ageuservalue = agevalue.current.value;
+    let collegeusername=collegename.current.value;
+
+    if (nameuservalue.trim().length === 0 || ageuservalue.trim().length === 0) {
       setError({
-        title: 'Invalid input',
-        message: 'Please enter a valid name and age (non-empty values).',
+        title: "Invalid input",
+        message: "Please enter a valid name and age (non-empty values).",
       });
       return;
     }
-    if (+enteredAge < 1) {
+    if (+ageuservalue < 1) {
       setError({
-        title: 'Invalid age',
-        message: 'Please enter a valid age (> 0).',
+        title: "Invalid age",
+        message: "Please enter a valid age (> 0).",
       });
       return;
     }
-    props.onAddUser(enteredUsername, enteredAge);
-    setEnteredUsername('');
-    setEnteredAge('');
-  };
-
-  const usernameChangeHandler = (event) => {
-    setEnteredUsername(event.target.value);
-  };
-
-  const ageChangeHandler = (event) => {
-    setEnteredAge(event.target.value);
+    props.onAddUser(nameuservalue, ageuservalue,collegeusername);
+    namevalue.current.value = "";
+    agevalue.current.value = "";
+    collegename.current.value = "";
   };
 
   const errorHandler = () => {
@@ -56,19 +54,11 @@ const AddUser = (props) => {
       <Card className={classes.input}>
         <form onSubmit={addUserHandler}>
           <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            type="text"
-            value={enteredUsername}
-            onChange={usernameChangeHandler}
-          />
+          <input id="username" type="text" ref={namevalue} />
           <label htmlFor="age">Age (Years)</label>
-          <input
-            id="age"
-            type="number"
-            value={enteredAge}
-            onChange={ageChangeHandler}
-          />
+          <input id="age" type="number" ref={agevalue} />
+          <label htmlFor="collegename">College Name</label>
+          <input id="age" type="text" ref={collegename} />
           <Button type="submit">Add User</Button>
         </form>
       </Card>
