@@ -1,41 +1,53 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from "react";
+import Login from "./Login/Loginform";
+import Fooditem from "./Additem/Fooditem";
+import ElectronicItem from "./Additem/Electronicitem";
+import SkincareItem from "./Additem/Skincareitem";
 
-import Login from './components/Login/Login';
-import Home from './components/Home/Home';
-import MainHeader from './components/MainHeader/MainHeader';
-
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
- useEffect(()=>{
-  const localstoragedata=localStorage.getItem("key")
-  if(localstoragedata=="1"){
-    setIsLoggedIn(true)
-  }
- },[])
-  
-
-  const loginHandler = (email, password) => {
-    // We should of course check email and password
-    // But it's just a dummy/ demo anyways
-    localStorage.setItem("key","1")
-    setIsLoggedIn(true);
-
+const App = () => {
+  const [iselctronic, setiselctronic] = useState([]);
+  const [isfood, setisfood] = useState([]);
+  const [isskincare, setisskincare] = useState([]);
+  const datahandler = (data) => {
+    localStorage.setItem(data.ProductId, JSON.stringify(data));
+    if (data.ProductType == "Table 1") {
+      setiselctronic((item) => {
+        return [...item, data];
+      });
+    } else if (data.ProductType == "Table 2") {
+      setisfood((item) => {
+        return [...item, data];
+      });
+    } else {
+      setisskincare((item) => {
+        return [...item, data];
+      });
+    }
   };
 
-  const logoutHandler = () => {
-    localStorage.removeItem("key")
-    setIsLoggedIn(false);
+  const removefooditem = (id) => {
+    localStorage.removeItem(id)
+    setisfood((items) => items.filter((data) => data.ProductId != id));
   };
-
+  const removeelctronicitem = (id) => {
+    localStorage.removeItem(id)
+    setiselctronic((items) => items.filter((data) => data.ProductId != id));
+  };
+  const removeskincareitem = (id) => {
+    localStorage.removeItem(id)
+    setisskincare((items) => items.filter((data) => data.ProductId != id));
+  };
   return (
-    <React.Fragment>
-      <MainHeader isAuthenticated={isLoggedIn} onLogout={logoutHandler} />
-      <main>
-        {!isLoggedIn && <Login onLogin={loginHandler} />}
-        {isLoggedIn && <Home onLogout={logoutHandler} />}
-      </main>
-    </React.Fragment>
+    <div style={{margin:"30px", padding:"10px"} }>
+      <Login onSubmit={datahandler}></Login>
+      <header>
+        <h2>Orders</h2>
+      </header>
+      <ElectronicItem items={iselctronic} remove={removeelctronicitem}></ElectronicItem>
+      <Fooditem items={isfood} remove={removefooditem}></Fooditem>
+      <SkincareItem items={isskincare} remove={removeskincareitem}></SkincareItem>
+    </div>
   );
-}
+};
 
 export default App;
