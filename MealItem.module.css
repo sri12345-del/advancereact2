@@ -20,3 +20,22 @@
     color: #ad5502;
     font-size: 1.25rem;
   }
+
+  .addmeal{
+    font-weight: bold;
+    padding: 10px;
+    margin: 10px; 
+  }
+  .count{
+    flex-direction: column;
+
+  }
+  .addmeal button{
+    font: inherit;
+    background: #cc8d52;
+    border-radius: 25px;
+    text-align: center;
+    font-weight: bold;
+    justify-content: space-around;
+    padding: 0 2rem ;
+  }
