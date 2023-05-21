@@ -5,6 +5,7 @@ const Corecontext = React.createContext({
   totalAmount: 0,
   additem: (item) => {},
   removeitem: (id) => {},
+ 
 });
 
 export default Corecontext;
