@@ -1,25 +1,25 @@
 import React, { useState } from "react";
-import Meals from "./Components/Meals/Meals";
-import Header from "./Components/Layout/Header";
-import Cart from "./Components/Cart/Cart";
-import Contextprovider from "./Stroe/ContextProvider";
+import Formitems from "./Formitem/Formitems";
+import Listitem from "./Listitem/listitems";
+import Header from "./header/header";
+import Contextprovider from "./store/Contextprovider";
+import Cart from "./Cart/cart";
 
 function App() {
   const [istrue, setistrue] = useState(false);
 
-  const cartitemhandler = () => {
+  const changestatehandler = () => {
     setistrue(true);
   };
-  const cancelhandler = () => {
+  const changestate = () => {
     setistrue(false);
   };
   return (
     <Contextprovider>
-      {istrue && <Cart oncancel={cancelhandler}></Cart>}
-      <Header onClick={cartitemhandler}></Header>
-      <main>
-        <Meals></Meals>
-      </main>
+      {istrue && <Cart onchange={changestate}></Cart>}
+      <Header onchange={changestatehandler}></Header> 
+        <Formitems></Formitems>
+        <Listitem></Listitem>
     </Contextprovider>
   );
 }
