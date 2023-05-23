@@ -1,27 +1,28 @@
-import React, { useState } from "react";
-import Formitems from "./Formitem/Formitems";
-import Listitem from "./Listitem/listitems";
-import Header from "./header/header";
-import Contextprovider from "./store/Contextprovider";
-import Cart from "./Cart/cart";
+import React from "react";
+import { Container, Navbar } from "react-bootstrap";
+import Containers from "./Component/contanier";
+import Listitems from "./Component/items/listitem";
 
-function App() {
-  const [istrue, setistrue] = useState(false);
-
-  const changestatehandler = () => {
-    setistrue(true);
-  };
-  const changestate = () => {
-    setistrue(false);
-  };
+const App = () => {
   return (
-    <Contextprovider>
-      {istrue && <Cart onchange={changestate}></Cart>}
-      <Header onchange={changestatehandler}></Header> 
-        <Formitems></Formitems>
-        <Listitem></Listitem>
-    </Contextprovider>
+    <div>
+      <Navbar bg="dark" expand="sm" variant="dark">
+        <Container>
+          <Navbar.Brand ></Navbar.Brand>
+          <Navbar.Brand>
+            <span> Home </span>
+            <span> Store </span>
+            <span> About </span>
+          </Navbar.Brand>
+          <Navbar.Brand>
+            <button>Cart</button>
+          </Navbar.Brand >
+        </Container>
+      </Navbar>
+      <Containers></Containers>
+      <Listitems></Listitems>
+    </div>
   );
-}
+};
 
 export default App;
