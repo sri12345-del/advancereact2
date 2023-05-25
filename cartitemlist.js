@@ -1,6 +1,9 @@
+import React, { useContext } from "react";
 import { Table } from "react-bootstrap";
+import Cartcontaxt from "../store/context";
 
-const Cartitemlist = (props) => {
+const Cartitemlist = () => {
+  const autctx = useContext(Cartcontaxt);
   return (
     <div>
       <Table striped="columns">
@@ -12,23 +15,24 @@ const Cartitemlist = (props) => {
           </tr>
         </thead>
         <tbody>
-          {props.item.map((item) => (
-            <tr>
+          {autctx.item.map((item) => (
+            <tr key={item.id}>
               <td>{item.title}</td>
               <td>{item.price}</td>
               <td>
-                $<span style={{ border: "1px solid blue" }}> 34 </span>
-                <span>
-                  <button> Remove </button>
-                </span>
+                <div>
+                  $
+                  <span style={{ border: "1px solid blue" }}>
+                    {" "}
+                    {item.quantity}{" "}
+                  </span>
+                  <span>
+                    <button> Remove </button>
+                  </span>
+                </div>
               </td>
             </tr>
           ))}
-          <tr>
-            <td></td>
-            <td>totalamount</td>
-            <td></td>
-          </tr>
         </tbody>
       </Table>
     </div>
