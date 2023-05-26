@@ -1,24 +1,35 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Homepage from "./pages/Homepage";
-import Productpage from "./pages/Product";
-import Rootlayout from "./pages/Root";
-import Error from "./pages/error";
-import About from "./pages/About";
+import React, { useState } from "react";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Rootlayout></Rootlayout>,
-    errorElement: <Error></Error>,
-    children: [
-      { path: "/", element: <Homepage></Homepage> },
-      { path: "/product", element: <Productpage></Productpage> },
-      { path: "/about", element: <About></About> },
-    ],
-  },
-]);
+import MoviesList from "./components/MoviesList";
+import "./App.css";
+
 function App() {
-  return <RouterProvider router={router}></RouterProvider>;
+  const [movies, setmovies] = useState([]);
+  const fetchdatahandler = async () => {
+    const response = await fetch("https://swapi.dev/api/films/");
+
+    const data = await response.json();
+    const updatedata = data.results.map((item) => {
+      return {
+        id: item.episode_id,
+        title: item.title,
+        releaseDate: item.release_date,
+        openingText: item.opening_crawl,
+      };
+    });
+    setmovies(updatedata);
+  };
+
+  return (
+    <React.Fragment>
+      <section>
+        <button onClick={fetchdatahandler}>Fetch Movies</button>
+      </section>
+      <section>
+        <MoviesList movies={movies} />
+      </section>
+    </React.Fragment>
+  );
 }
 
 export default App;
