@@ -1,68 +1,37 @@
-import React, { useState, useEffect, useCallback } from "react";
-
-import MoviesList from "./components/MoviesList";
-import "./App.css";
+import { Route } from "react-router-dom";
+import Welcome from "./pages/welcome";
+import Product from "./pages/product";
+import MainHeader from "./component/MainHomepage";
+import About from "./pages/About";
 
 function App() {
-  const [movies, setmovies] = useState([]);
-  const [isloder, setisloader] = useState(false);
-  const [error, seterror] = useState(false);
 
-  const fetchdatahandler = useCallback(async () => {
-    setisloader(true);
-    seterror(null);
+  const additemhandler = async (data) => {
+    console.log(data)
     try {
-      const response = await fetch("https://swapi.dev/api/films/");
-      if (!response.ok) {
-        setTimeout(() => {
-          seterror("something went wrong ...retrying");
-        }, 5000);
-      }
-      const data = await response.json();
-      const updatedata = data.results.map((item) => {
-        return {
-          id: item.episode_id,
-          title: item.title,
-          releaseDate: item.release_date,
-          openingText: item.opening_crawl,
-        };
-      }, []);
-      setmovies(updatedata);
+      let response = await fetch("https://react-http-735b2-default-rtdb.firebaseio.com/movies.json", {
+        method: "POST",
+        body: JSON.stringify(data)
+      })
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-    setisloader(false);
-  }, []);
-  useEffect(() => {
-    fetchdatahandler();
-  }, [fetchdatahandler]);
-
-  const cancelhandler = () => {
-    seterror(null);
-  };
-
-  let content = <p>found no movies</p>;
-  if (movies.length > 0) {
-    content = <MoviesList movies={movies} />;
   }
-  if (error) {
-    content = (
-      <p>
-        {error} <button onClick={cancelhandler}>Cancel</button>
-      </p>
-    );
-  }
-  if (isloder) {
-    content = <p>loading...</p>;
-  }
-
   return (
-    <React.Fragment>
-      <section>
-        <button onClick={fetchdatahandler}>Fetch Movies</button>
-      </section>
-      <section>{content}</section>
-    </React.Fragment>
+    <div>
+      <MainHeader></MainHeader>
+      <main>
+        <Route path="/welcome">
+          <Welcome></Welcome>
+        </Route>
+        <Route path="/product">
+          <Product></Product>
+        </Route>
+        <Route path="/About">
+          <About additem={additemhandler}></About>
+        </Route>
+      </main>
+    </div>
   );
 }
 
