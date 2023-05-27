@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import MoviesList from "./components/MoviesList";
 import "./App.css";
@@ -7,7 +7,8 @@ function App() {
   const [movies, setmovies] = useState([]);
   const [isloder, setisloader] = useState(false);
   const [error, seterror] = useState(false);
-  const fetchdatahandler = async () => {
+
+  const fetchdatahandler = useCallback(async () => {
     setisloader(true);
     seterror(null);
     try {
@@ -25,20 +26,24 @@ function App() {
           releaseDate: item.release_date,
           openingText: item.opening_crawl,
         };
-      });
+      }, []);
       setmovies(updatedata);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
     setisloader(false);
-  };
+  }, []);
+  useEffect(() => {
+    fetchdatahandler();
+  }, [fetchdatahandler]);
+
   const cancelhandler = () => {
     seterror(null);
   };
 
   let content = <p>found no movies</p>;
   if (movies.length > 0) {
-    content=<MoviesList movies={movies} />
+    content = <MoviesList movies={movies} />;
   }
   if (error) {
     content = (
@@ -56,9 +61,7 @@ function App() {
       <section>
         <button onClick={fetchdatahandler}>Fetch Movies</button>
       </section>
-      <section>
-        {content}
-      </section>
+      <section>{content}</section>
     </React.Fragment>
   );
 }
