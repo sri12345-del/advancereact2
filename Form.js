@@ -1,69 +1,33 @@
-import React, { useState } from "react";
-import Card from "./Card";
-import classes from "./AddUser.module.css";
-import Button from "./Button";
-import Errormobule from "./Errormodule";
-const Form = (props) => {
-  const [name, setname] = useState("");
-  const [age, setage] = useState("");
-  const [error, seterror] = useState();
+import React,{useRef} from "react";
 
-  const namehandler = (e) => {
-    setname(e.target.value);
-  };
-  const agehandler = (e) => {
-    setage(e.target.value);
-  };
-
-  const inputhandler = (e) => {
-    e.preventDefault();
-    if (name.trim().length == 0 || age.trim().length == 0) {
-      seterror({
-        title: "invalid input",
-        message: "please enter a valid input",
-      });
-      return;
+const Form = () => {
+    const  titleval=useRef()
+    const  openingText=useRef()
+    const dateval = useRef()
+    
+    const datahandler = (e) => {
+        e.preventDefault();
+        const obj = {
+            id: Math.random().toString(),
+            title: titleval.current.value,
+            openingText: openingText.current.value,
+            Release:dateval.current.value,
+        }
+        console.log(obj)
     }
-    if (+age < 0) {
-      seterror({
-        title: "invalid age",
-        message: "please enter a valid age(age>0)",
-      });
-      return;
-    }
-    const obj = {
-      id: Math.random().toString(),
-      name: name,
-      age: age,
-    };
-    props.items(obj);
-    setname("");
-    setage("");
-  };
-  const errorhandler=()=>{
-    seterror(null)
-  }
 
-  return (
-    <div>
-      {error && (
-        <Errormobule
-          title={error.title}
-          message={error.message}
-          onConform={errorhandler}
-        ></Errormobule>
-      )}
-      <Card className={classes.input}>
-        <form onSubmit={inputhandler}>
-          <label>User name</label>
-          <input type="text" onChange={namehandler} value={name}></input>
-          <label>Age(years)</label>
-          <input type="number" onChange={agehandler} value={age}></input>
-          <Button type="onsubmit">Add User</Button>
-        </form>
-      </Card>
-    </div>
-  );
-};
+    
+    return (
+        <form onSubmit={datahandler}>
+            <label>Title</label><br/>
+            <input type="text" ref={titleval}></input><br/>
+            <label>Opening Text</label><br/>
+            <input type="textarea"  ref={openingText}></input><br/>
+            <label>Release Date</label><br/>
+            <input type="Date" ref={dateval}></input><br />
+            <button type="onSubmit">Add Movies</button>
+      </form>
+  )  
+}
 
 export default Form;
