@@ -3,6 +3,7 @@ import Welcome from "./pages/welcome";
 import Product from "./pages/product";
 import MainHeader from "./component/MainHomepage";
 import About from "./pages/About";
+import Productdetails from "./pages/productdetails";
 
 function App() {
 
@@ -24,11 +25,14 @@ function App() {
         <Route path="/welcome">
           <Welcome></Welcome>
         </Route>
-        <Route path="/product">
+        <Route path="/products">
           <Product></Product>
         </Route>
         <Route path="/About">
           <About additem={additemhandler}></About>
+        </Route>
+        <Route path="/products/:productId">
+          <Productdetails></Productdetails>
         </Route>
       </main>
     </div>

@@ -1,8 +1,6 @@
 import React,{useRef} from "react"
 
-
 const About = (props) => {
-
     const nameval=useRef()
     const emailval=useRef()
     const phoneval = useRef()
