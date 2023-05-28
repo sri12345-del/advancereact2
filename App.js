@@ -1,41 +1,25 @@
-import { Route } from "react-router-dom";
-import Welcome from "./pages/welcome";
-import Product from "./pages/product";
-import MainHeader from "./component/MainHomepage";
-import About from "./pages/About";
-import Productdetails from "./pages/productdetails";
+import { Switch, Route } from 'react-router-dom';
+
+import Layout from './components/Layout/Layout';
+import UserProfile from './components/Profile/UserProfile';
+import AuthPage from './pages/AuthPage';
+import HomePage from './pages/HomePage';
 
 function App() {
-
-  const additemhandler = async (data) => {
-    console.log(data)
-    try {
-      let response = await fetch("https://react-http-735b2-default-rtdb.firebaseio.com/movies.json", {
-        method: "POST",
-        body: JSON.stringify(data)
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
   return (
-    <div>
-      <MainHeader></MainHeader>
-      <main>
-        <Route path="/welcome">
-          <Welcome></Welcome>
+    <Layout>
+      <Switch>
+        <Route path='/' exact>
+          <HomePage />
         </Route>
-        <Route path="/products">
-          <Product></Product>
+        <Route path='/auth'>
+          <AuthPage />
         </Route>
-        <Route path="/About">
-          <About additem={additemhandler}></About>
+        <Route path='/profile'>
+          <UserProfile />
         </Route>
-        <Route path="/products/:productId">
-          <Productdetails></Productdetails>
-        </Route>
-      </main>
-    </div>
+      </Switch>
+    </Layout>
   );
 }
 

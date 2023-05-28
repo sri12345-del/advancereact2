@@ -1,40 +1,23 @@
-import { NavLink } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-import classes from "./MainNavi.module.css";
+import classes from './MainNavigation.module.css';
 
-const Mainnvanigation = () => {
+const MainNavigation = () => {
   return (
     <header className={classes.header}>
+      <Link to='/'>
+        <div className={classes.logo}>React Auth</div>
+      </Link>
       <nav>
-        <ul className={classes.list}>
+        <ul>
           <li>
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive ? classes.active : undefined
-              }
-              end
-            >
-              Home
-            </NavLink>
+            <Link to='/auth'>Login</Link>
           </li>
           <li>
-            <NavLink
-              to="/product"
-              className={({ isActive }) =>
-                isActive ? classes.active : undefined
-              }
-            >
-              product
-            </NavLink>
+            <Link to='/profile'>Profile</Link>
           </li>
           <li>
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                isActive ? classes.active : undefined
-              }
-            >About</NavLink>
+            <button>Logout</button>
           </li>
         </ul>
       </nav>
@@ -42,4 +25,4 @@ const Mainnvanigation = () => {
   );
 };
 
-export default Mainnvanigation;
+export default MainNavigation;
