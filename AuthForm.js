@@ -1,10 +1,13 @@
-import { useState, useRef } from "react";
+import { useState, useRef ,useContext} from "react";
 
 import classes from "./AuthForm.module.css";
+import Autcontext from "../../store/Autcontext";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isloading, setisloading] = useState(false);
+
+  const context=useContext(Autcontext)
 
   const enteredemail = useRef();
   const enteredpassword = useRef();
@@ -16,38 +19,46 @@ const AuthForm = () => {
   const onsubmithandler = (e) => {
     setisloading(true);
     e.preventDefault();
-    const email = enteredemail.current.value;
-    const password = enteredpassword.current.value;
+    const enteremail = enteredemail.current.value;
+    const enterpassword = enteredpassword.current.value;
 
+    var url;
     if (isLogin) {
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCenENgt4LrLH79u1_uh-2mToo1R_OEeRM";
     } else {
-      fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCenENgt4LrLH79u1_uh-2mToo1R_OEeRM",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: email,
-            password: password,
-            returnSecureToken: true,
-          }),
-          headers: {
-            "Content-type": "application/json",
-          },
-        }
-      ).then((res) => {
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCenENgt4LrLH79u1_uh-2mToo1R_OEeRM";
+    }
+
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        email: enteremail,
+        password: enterpassword,
+        returnSecureToken: true,
+      }),
+      headers: {
+        "Content-type": "Application/json",
+      },
+    })
+      .then((res) => {
         setisloading(false);
         if (res.ok) {
+          return res.json();
         } else {
-          return res.json().then((data) => {
-            let errormsg = "something is wrong";
-            if (data && data.error && data.error.message) {
-              errormsg = data.error.message;
-            }
-            alert(errormsg);
+          return res.json().then(() => {
+            let errorMessage = "something is wrong";
+            throw new Error(errorMessage);
           });
         }
+      })
+      .then((data) => {
+        context.login(data.idToken)
+      })
+      .catch((err) => {
+        alert(err.message);
       });
-    }
   };
 
   return (
@@ -63,8 +74,10 @@ const AuthForm = () => {
           <input type="password" id="password" required ref={enteredpassword} />
         </div>
         <div className={classes.actions}>
-        {!isLogin && isloading && <p>...Fetchimg</p>}
-        {!isLogin && <button type="onSubmit">Create Account</button>}
+          {!isloading && (
+            <button>{!isLogin ? "create account" : "log in"}</button>
+          )}
+          {isloading && <p>...Fetchimg</p>}
           <button
             type="button"
             className={classes.toggle}
