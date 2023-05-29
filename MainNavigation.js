@@ -1,12 +1,20 @@
 import React, { useContext } from "react";
 
-import { Link } from "react-router-dom";
+import { Link ,useHistory} from "react-router-dom";
 
 import classes from "./MainNavigation.module.css";
 import Autcontext from "../../store/Autcontext";
 
 const MainNavigation = () => {
   const context = useContext(Autcontext);
+
+  const history = useHistory()
+  const clickhandler = () => {
+    history.replace("/auth")
+    context.logout()
+
+  }
+
 
   const islooged = context.isloogedin;
   return (
@@ -28,7 +36,7 @@ const MainNavigation = () => {
           )}
           {islooged && (
             <li>
-              <button>Logout</button>
+              <button onClick={clickhandler}>Logout</button>
             </li>
           )}
         </ul>
