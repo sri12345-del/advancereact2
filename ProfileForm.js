@@ -1,8 +1,10 @@
 import React, { useRef, useContext } from "react";
+import {useHistory} from "react-router-dom"
 import classes from "./ProfileForm.module.css";
 import Autcontext from "../../store/Autcontext";
 
 const ProfileForm = () => {
+  const history=useHistory()
   const autctx = useContext(Autcontext);
 
   const enterednewpassword = useRef();
@@ -18,13 +20,15 @@ const ProfileForm = () => {
         body: JSON.stringify({
           idToken: autctx.token,
           password: enterval,
-          returnSecureToken: false,
+          returnSecureToken: true,
         }),
         headers: {
           "Content-Type": "application/json",
         },
       }
-    ).then((res) => {});
+    ).then((res) => {
+      history.replace("/")
+    });
   };
   return (
     <form className={classes.form} onSubmit={submithandler}>
