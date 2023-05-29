@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Autcontext = React.createContext({
   token: "",
@@ -8,10 +8,16 @@ const Autcontext = React.createContext({
 });
 
 export const Autcontextprovider = (props) => {
-    const [token, settoken] = useState(null);
+  const [token, settoken] = useState(null);
+  const [useIslogged, setuseIslogged] = useState(false);
+  useEffect(() => {
+    if (!localStorage.getItem("id")) {
+      setuseIslogged(true);
+    } else {
+      setuseIslogged(false);
+    }
+  }, []);
 
-    const useIslogged=!!token
-    
   const loginhandler = (tok) => {
     settoken(tok);
   };

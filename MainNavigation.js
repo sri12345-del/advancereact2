@@ -12,6 +12,7 @@ const MainNavigation = () => {
   const clickhandler = () => {
     history.replace("/auth")
     context.logout()
+    localStorage.removeItem("key")
 
   }
 

@@ -56,8 +56,11 @@ const AuthForm = () => {
         }
       })
       .then((data) => {
+        
+        const tokenstring=JSON.stringify(data.idToken)
         context.login(data.idToken)
         history.replace("/")
+        localStorage.setItem("key",tokenstring)
 
       })
       .catch((err) => {
