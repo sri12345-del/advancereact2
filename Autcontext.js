@@ -10,13 +10,14 @@ const Autcontext = React.createContext({
 export const Autcontextprovider = (props) => {
   const [token, settoken] = useState(null);
   const [useIslogged, setuseIslogged] = useState(false);
-  useEffect(() => {
-    if (!localStorage.getItem("id")) {
-      setuseIslogged(true);
-    } else {
-      setuseIslogged(false);
+    useEffect(() => {
+        if (token) {
+        setuseIslogged(true)
+      setTimeout(() => {
+        setuseIslogged(false);
+      }, 10000);
     }
-  }, []);
+  }, [token]);
 
   const loginhandler = (tok) => {
     settoken(tok);
