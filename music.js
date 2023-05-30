@@ -1,6 +1,5 @@
 import React,{useContext} from "react"
-import Cartcontaxt from "../../store/context"
-
+import Cartcontaxt from "../store/context"
 
 const Music = (props) => {
 
@@ -10,7 +9,7 @@ const Music = (props) => {
     autoctx.additem(item)
   }
     return (
-        <div >  
+      <div >
               <h2>{props.items.title}</h2>
               <div>
                 <img

@@ -4,10 +4,10 @@ import Cartcontaxt from "./context";
 const Cartcontaxtprovider = (props) => {
   const [listitem, setlistitem] = useState([]);
   const [totalquantity, settotalquantity] = useState(0);
+  const [token,settoken]=useState(null)
 
   const Additemhandler = (item) => {
     settotalquantity(totalquantity + 1);
-    console.log(totalquantity)
 
     setlistitem((items) => {
       const index = items.findIndex((itemss) => itemss.id === item.id);
@@ -20,7 +20,6 @@ const Cartcontaxtprovider = (props) => {
         };
         let olditem = [...items];
         olditem[index] = updateitem;
-        console.log(olditem);
 
         return olditem;
       } else {
@@ -30,6 +29,7 @@ const Cartcontaxtprovider = (props) => {
   };
 
   const obj = {
+    token:token,
     item: listitem,
     totalquantity: totalquantity,
     additem: Additemhandler,
