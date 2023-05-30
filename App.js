@@ -4,7 +4,7 @@ import Containers from "./Component/contanier";
 import Cartitem from "./cart/cartitem";
 import Cartcontaxtprovider from "./store/caontextprovider";
 import Cartcontaxt from "./store/context";
-import { Route ,Switch} from "react-router-dom";
+import { Route ,Switch,Redirect} from "react-router-dom";
 import Store from "./Component/Store";
 import Home from "./Component/Home";
 import About from "./Component/About";
@@ -27,17 +27,23 @@ const App = () => {
     <Layout>
     <Switch>
       <Route path="/store" exact>
-        <Store></Store>
+          {autoctx.loggedin && <Store></Store>}
+          {!autoctx.loggedin && <Redirect to="./auth"></Redirect>}
       </Route>
       <Route path="/home">
-        <Home></Home>
+          {autoctx.loggedin && <Home></Home>}
+          {!autoctx.loggedin && <Redirect to="./auth"></Redirect>}
       </Route>
       <Route path="/about">
-        <About></About>
+          {autoctx.loggedin && <About></About>}
+          {!autoctx.loggedin && <Redirect to="./auth"></Redirect>}
         </Route>
         <Route path="/auth">
           <Login>
           </Login>
+        </Route>
+        <Route path="*">
+          <Redirect to="/auth"></Redirect>
         </Route>
       </Switch>
       </Layout>

@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import Cartcontaxt from "./context";
 
 const Cartcontaxtprovider = (props) => {
+  
   const [listitem, setlistitem] = useState([]);
   const [totalquantity, settotalquantity] = useState(0);
-  const [token,settoken]=useState(null)
+  const [islogged, setisloged] = useState(false)
+  const [token, settoken]=useState(null)
+  
+  useEffect(() => {
+    if (localStorage.getItem("key")){
+    setisloged(true)
+    } else {
+      setisloged(false)
+  }
+},[token])
+
+  const loginhandler = (token) => {
+    settoken(token)
+}
 
   const Additemhandler = (item) => {
     settotalquantity(totalquantity + 1);
@@ -29,10 +43,12 @@ const Cartcontaxtprovider = (props) => {
   };
 
   const obj = {
-    token:token,
+    token: token,
+    loggedin:islogged,
     item: listitem,
     totalquantity: totalquantity,
     additem: Additemhandler,
+    logedin:loginhandler,
   };
   return (
     <Cartcontaxt.Provider value={obj}>{props.children}</Cartcontaxt.Provider>
