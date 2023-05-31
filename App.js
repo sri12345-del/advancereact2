@@ -1,8 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
-import Containers from "./Component/contanier";
 import Cartitem from "./cart/cartitem";
-import Cartcontaxtprovider from "./store/caontextprovider";
 import Cartcontaxt from "./store/context";
 import { Route ,Switch,Redirect} from "react-router-dom";
 import Store from "./Component/Store";
@@ -16,17 +13,17 @@ const App = () => {
   const autoctx = useContext(Cartcontaxt);
 
   const cartvisible = () => {
-    console.log("visible");
     setistrue(true);
   };
 
   const cartclosehandler = () => {
-    setistrue(false);
+    setistrue(false)
   };
   return (
-    <Layout>
+    <Layout onClick={cartvisible}>
     <Switch>
-      <Route path="/store" exact>
+        <Route path="/store" exact>
+          {istrue && <Cartitem close={cartclosehandler} show={istrue}></Cartitem>}
           {autoctx.loggedin && <Store></Store>}
           {!autoctx.loggedin && <Redirect to="./auth"></Redirect>}
       </Route>

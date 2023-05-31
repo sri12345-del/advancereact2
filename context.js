@@ -4,9 +4,10 @@ const Cartcontaxt = React.createContext({
   token: "",
   loggedin:null,
   item: [],
-  totalquantity: 1,
+  totalquantity: null,
+  totalamount:null,
   additem: () => { },
-  logedin:(token)=>{},
+  logedin: (token) => { },
 });
 
 export default Cartcontaxt;

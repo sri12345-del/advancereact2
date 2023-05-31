@@ -17,17 +17,16 @@ const Cartitemlist = () => {
         <tbody>
           {autctx.item.map((item) => (
             <tr key={item.id}>
-              <td>{item.title}</td>
-              <td>{item.price}</td>
+              <td><img src={item.imageUrl} alt="there is flower" style={{ maxWidth: "40%", textAlign: "center" }}></img></td>
+              <td>${item.price}</td>
               <td>
-                <div>
-                  $
-                  <span style={{ border: "1px solid blue" }}>
+                <div style={{display:"flex", justifyContent:"space-around"}}>
+                  <span >
                     {" "}
                     {item.quantity}{" "}
                   </span>
                   <span>
-                    <button> Remove </button>
+                    <button> - </button>
                   </span>
                 </div>
               </td>

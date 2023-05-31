@@ -1,22 +1,20 @@
 import classes from "./Login.module.css";
-import React, { useRef ,useContext} from "react";
-import {useHistory} from "react-router-dom"
+import React, { useRef, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import Cartcontaxt from "../store/context";
 
 const Login = () => {
   const enteredemail = useRef();
   const enteredpassword = useRef();
 
-  const autctx=useContext(Cartcontaxt)
-
-  const history=useHistory()
-
+  const autctx = useContext(Cartcontaxt);
+  const history = useHistory();
   const onsubmithandler = (e) => {
     e.preventDefault();
     const email = enteredemail.current.value;
     const password = enteredpassword.current.value;
     fetch(
-       "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCenENgt4LrLH79u1_uh-2mToo1R_OEeRM",
+      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCenENgt4LrLH79u1_uh-2mToo1R_OEeRM",
       {
         method: "POST",
         body: JSON.stringify({
@@ -30,15 +28,21 @@ const Login = () => {
       }
     )
       .then((res) => {
-        return res.json();
+        if (res.ok) {
+          return res.json();
+        }
       })
       .then((data) => {
-        localStorage.setItem("key", data.idToken)
-        autctx.token = data.idToken
-        history.replace("/store")
+        if (data.idToken) {
+          localStorage.setItem("key", data.idToken);
+          let email=data.email.replace(/[^a-zA-Z0-9]/gi,"")
+          localStorage.setItem("email", email);
+          history.replace("/store");
+          autctx.logedin(data.idToken);
+        }
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.message);
         alert(err);
       });
   };

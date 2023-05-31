@@ -1,5 +1,7 @@
 import { Modal } from "react-bootstrap";
 import Cartitemlist from "./cartitemlist";
+import React,{useContext} from "react";
+import Cartcontaxt from "../store/context";
 
 const productsArr = [
   {
@@ -25,6 +27,7 @@ const productsArr = [
 ];
 
 const Cartitem = (props) => {
+  const autctx=useContext(Cartcontaxt)
   return (
     <Modal show={props.show} onHide={props.close}>
       <Modal.Header>
@@ -33,14 +36,16 @@ const Cartitem = (props) => {
       <Modal.Body>
         <Cartitemlist item={productsArr}></Cartitemlist>
       </Modal.Body>
-      <Modal.Footer>
-        <span>totalamount</span>
-        <span>
+      <Modal.Footer style={{display:"flex", justifyContent:"space-between",margin:"0 2rem"}}>
+        <div>
           <button onClick={props.close} variant="primary">
             close
           </button>
-        </span>
-       
+        </div>
+        <div>
+          <span>totalamount : </span>
+          <span style={{border:"2px solid lightblue"}}>{ autctx.totalamount}</span>
+        </div>
       </Modal.Footer>
     </Modal>
   );

@@ -5,7 +5,7 @@ import classes from "./home.module.css"
 const Layout = (props) => {
     return (
         <React.Fragment>
-            <MainNav>
+            <MainNav onClick={props.onClick}>
             </MainNav>
             <header className={classes.header}>The Generics</header>
             <main>{props.children}</main>

@@ -35,7 +35,7 @@ const productsArr = [
 
 const Store = () => {
   return (
-    <Container>
+    <Container style={{textAlign:"center", fontSize:"200%", padding:"2rem 4rem"}}>
       <header>
         <h2>Music</h2>
       </header>

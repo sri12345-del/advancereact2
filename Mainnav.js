@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useContext} from "react";
 import classes from "./Mainnav.module.css";
 
-import { Link ,useHistory} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import Cartcontaxt from "../store/context";
 
-const MainNav = () => {
-const history=useHistory()
-    const clickhandler = () => {
-    history.replace("/auth")
-}
+const MainNav = (props) => {
+  const autctx=useContext(Cartcontaxt)
   return (
     <header className={classes.header}>
       <nav>
@@ -22,9 +21,11 @@ const history=useHistory()
             <Link to="/about">About</Link>
           </li>
           <li>
-            <Link to="/auth" onClick={clickhandler}>Login</Link>
+            <Link to="/auth">Login</Link>
           </li>
-          <button>Cart</button>
+          <Button onClick={props.onClick} variant="danger">
+            {autctx.totalquantity}cart
+          </Button>
         </ul>
       </nav>
     </header>
