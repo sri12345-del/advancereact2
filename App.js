@@ -1,50 +1,27 @@
-import React, { useState, useContext } from "react";
-import Cartitem from "./cart/cartitem";
-import Cartcontaxt from "./store/context";
-import { Route ,Switch,Redirect} from "react-router-dom";
-import Store from "./Component/Store";
-import Home from "./Component/Home";
-import About from "./Component/About";
-import Layout from "./Layout/Layout";
-import Login from "./Component/Login";
+import React, { useState } from "react";
+import Formitems from "./Formitem/Formitems";
+import Listitem from "./Listitem/listitems";
+import Header from "./header/header";
+import Contextprovider from "./store/Contextprovider";
+import Cart from "./Cart/cart";
 
-const App = () => {
+function App() {
   const [istrue, setistrue] = useState(false);
-  const autoctx = useContext(Cartcontaxt);
 
-  const cartvisible = () => {
+  const changestatehandler = () => {
     setistrue(true);
   };
-
-  const cartclosehandler = () => {
-    setistrue(false)
+  const changestate = () => {
+    setistrue(false);
   };
   return (
-    <Layout onClick={cartvisible}>
-    <Switch>
-        <Route path="/store" exact>
-          {istrue && <Cartitem close={cartclosehandler} show={istrue}></Cartitem>}
-          {autoctx.loggedin && <Store></Store>}
-          {!autoctx.loggedin && <Redirect to="./auth"></Redirect>}
-      </Route>
-      <Route path="/home">
-          {autoctx.loggedin && <Home></Home>}
-          {!autoctx.loggedin && <Redirect to="./auth"></Redirect>}
-      </Route>
-      <Route path="/about">
-          {autoctx.loggedin && <About></About>}
-          {!autoctx.loggedin && <Redirect to="./auth"></Redirect>}
-        </Route>
-        <Route path="/auth">
-          <Login>
-          </Login>
-        </Route>
-        <Route path="*">
-          <Redirect to="/auth"></Redirect>
-        </Route>
-      </Switch>
-      </Layout>
+    <Contextprovider>
+      {istrue && <Cart onchange={changestate}></Cart>}
+      <Header onchange={changestatehandler}></Header> 
+        <Formitems></Formitems>
+        <Listitem></Listitem>
+    </Contextprovider>
   );
-};
+}
 
 export default App;
