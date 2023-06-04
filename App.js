@@ -1,26 +1,22 @@
-import React, { useState } from "react";
-import Formitems from "./Formitem/Formitems";
-import Listitem from "./Listitem/listitems";
-import Header from "./header/header";
-import Contextprovider from "./store/Contextprovider";
-import Cart from "./Cart/cart";
+import { Route } from "react-router-dom";
+import Login from "./pages/Auth";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Layout from "./layout/layout";
 
 function App() {
-  const [istrue, setistrue] = useState(false);
-
-  const changestatehandler = () => {
-    setistrue(true);
-  };
-  const changestate = () => {
-    setistrue(false);
-  };
   return (
-    <Contextprovider>
-      {istrue && <Cart onchange={changestate}></Cart>}
-      <Header onchange={changestatehandler}></Header> 
-        <Formitems></Formitems>
-        <Listitem></Listitem>
-    </Contextprovider>
+    <Layout>
+      <Route path="/auth">
+        <Login></Login>
+      </Route>
+      <Route path="/home">
+        <Home></Home>
+      </Route>
+      <Route path="/about">
+        <About></About>
+      </Route>
+    </Layout>
   );
 }
 
