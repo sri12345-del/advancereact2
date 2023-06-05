@@ -1,9 +1,7 @@
-import React,{useContext} from "react"
+import React from "react"
 import { Card, Table } from "react-bootstrap"
-import Autcontext from "../store/autcontext"
 
-const Expenselist = () => {
-    const autctx=useContext(Autcontext)
+const Expenselist = (props) => {
     return (
         <Card style={{margin:"0rem 25%", padding:"1rem 3rem"}}>
             <Table>
@@ -14,8 +12,8 @@ const Expenselist = () => {
                         <th>Catagory</th>
                     </tr>
                 </thead>
-                <tbody>{autctx.expenseitem.map(item => (
-                    <tr id={item.id}>
+                <tbody>{props.items.map(item => (
+                    <tr key={ item.id} id={item.id}>
                         <td>{ item.money}</td>
                         <td>{ item.description}</td>
                         <td>{ item.catagory}</td>

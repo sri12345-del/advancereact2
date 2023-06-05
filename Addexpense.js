@@ -1,14 +1,30 @@
-import React, { useRef ,useContext} from "react";
+import React, { useEffect, useRef , useState} from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
-import Autcontext from "../store/autcontext";
 import Expenselist from "../Component/Expenselist";
 
 const AddExpense = () => {
 
-  const autctx=useContext(Autcontext)
   const money=useRef()
   const description=useRef()
-  const catagory=useRef()
+  const catagory = useRef()
+  
+  const [expenseitem, setexpenseitem] = useState([])
+  
+  useEffect(() => {
+    fetch("https://react-http-735b2-default-rtdb.firebaseio.com/expense.json", {
+      method: "GET",
+    }).then(res => {
+      if (!res.ok) {
+        throw new Error("smething is wrong")
+      } else {
+        return res.json()
+      }
+    }).then(data => {
+      for (let key in data) {
+        setexpenseitem(item=>[...item,data[key]])
+       }
+    }).catch(err=>console.log(err.message))
+  },[])
 
   const additemhandler = (e) => {
     e.preventDefault();
@@ -18,7 +34,23 @@ const AddExpense = () => {
       catagory: catagory.current.value,
       id:Math.random().toString()
     }
-    autctx.addexpense(obj)
+    console.log(obj)
+    fetch("https://react-http-735b2-default-rtdb.firebaseio.com/expense.json", {
+      method: "POST",
+      body: JSON.stringify(obj),
+      headers: {
+        "Content-Type":"application/json"
+      }
+    }).then(res => {
+      if (!res.ok) {
+        throw new Error("something is wrong")
+      } else {
+        return res.json()
+      }
+    }).then(data => {
+      console.log(data.name)
+    })
+    setexpenseitem(item=>[...item,obj])
     
   }
   return (
@@ -44,7 +76,7 @@ const AddExpense = () => {
           <Button variant="primary" onClick={additemhandler}>Additem</Button>
         </Form>
       </Card>
-      <Expenselist></Expenselist>
+      <Expenselist items={expenseitem}></Expenselist>
     </Container>
   );
 };
