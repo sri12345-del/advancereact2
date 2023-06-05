@@ -2,7 +2,6 @@ import React, { useState, useRef, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import Autcontext from "../store/autcontext";
 import { Button, Card, Container, Form } from "react-bootstrap";
-import CardHeader from "react-bootstrap/esm/CardHeader";
 
 const Login = () => {
   const history = useHistory();
@@ -110,7 +109,7 @@ const Login = () => {
   return (
     <Container>
       {!resetpassword && (
-        <Form onSubmit={fetchhandler}>
+        <Form>
           {!islogin && <h2>Sign up</h2>}
           {islogin && <h2>Login</h2>}
           <Form.Group>
@@ -138,7 +137,7 @@ const Login = () => {
           )}
           <Button
             style={{ backgroundColor: formvalid ? "green" : "lightblue" }}
-          >
+           onClick={fetchhandler}>
             {islogin ? "login" : "signup"}
           </Button>
           {islogin && <Button onClick={passwordreset}>Foget Password</Button>}
