@@ -1,11 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import Expenselist from "../Component/Expenselist";
-
+import { useDispatch } from "react-redux";
+import { expenseaction } from "../store/Expenststore";
+import { useSelector } from "react-redux";
 const AddExpense = () => {
   const [money, setmoney] = useState("");
   const [description, setdescription] = useState("");
   const [catagory, setcatagory] = useState();
+
+  const dispatch = useDispatch();
+
+  const arritem = useSelector((state) => state.expense.item);
 
   const moneyhandler = (e) => {
     setmoney(e.target.value);
@@ -32,10 +38,11 @@ const AddExpense = () => {
         }
       })
       .then((data) => {
-        setexpenseitem([]);
+        //setexpenseitem([]);
         for (let key in data) {
           let newobj = { ...data[key], key: key };
-          setexpenseitem((item) => [...item, newobj]);
+          // setexpenseitem((item) => [...item, newobj]);
+          dispatch(expenseaction.addfromapi(newobj));
         }
       })
       .catch((err) => console.log(err.message));
@@ -69,12 +76,15 @@ const AddExpense = () => {
           ...obj,
           key: data.name,
         };
-        setexpenseitem((item) => [...item, newobj]);
+        dispatch(expenseaction.Addfromform(newobj));
+        // setexpenseitem((item) => [...item, newobj]);
       });
   };
 
   const deletehandler = (item) => {
-    setexpenseitem((data) => data.filter((val) => val.key != item));
+    console.log(item)
+    console.log(arritem)
+    arritem.filter(data=>data==item)
     fetch(
       `https://react-http-735b2-default-rtdb.firebaseio.com/expense/${item}.json`,
       {
@@ -88,29 +98,38 @@ const AddExpense = () => {
           return res.json();
         }
       })
-      .then(() => console.log("expense sucessfully deleted"))
+      .then(() => {
+        dispatch(expenseaction.deleteexpense(item));
+        console.log(arritem)
+        console.log("expense sucessfully deleted");
+      })
       .catch((err) => console.log(err));
   };
 
   const edithandler = (item) => {
-    setexpenseitem((data) => data.filter((val) => val.key != item));
-    const arr = expenseitem.filter(val=>val.key==item)
-    console.log(arr)
-    fetch(`https://react-http-735b2-default-rtdb.firebaseio.com/expense/${item}.json`, {
-      method: "PUT",
-      body: JSON.stringify({
-        money: money,
-        description: description,
-        catagory:catagory,
-      })
-    }).then(res => {
-      if (!res.ok) {
-        throw new Error("somthing is wrong")
-      } else {
-        return res.json()
+    const editfilter = arritem.filter((val) => val.key != item);
+    editfilter.map((item) => dispatch(expenseaction.Addfromform(item)));
+    console.log(arritem);
+    fetch(
+      `https://react-http-735b2-default-rtdb.firebaseio.com/expense/${item}.json`,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          money: money,
+          description: description,
+          catagory: catagory,
+        }),
       }
-    }).then(data => console.log(data))
-    .catch(err=>console.log(err))
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("somthing is wrong");
+        } else {
+          return res.json();
+        }
+      })
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
   };
   return (
     <Container style={{ alignItems: "center" }}>
@@ -146,7 +165,7 @@ const AddExpense = () => {
         </Form>
       </Card>
       <Expenselist
-        items={expenseitem}
+        items={arritem}
         delete={deletehandler}
         edit={edithandler}
       ></Expenselist>

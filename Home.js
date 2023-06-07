@@ -1,4 +1,4 @@
-import React, { useState ,useRef,useContext, useEffect} from "react";
+import React, { useState ,useContext} from "react";
 import Autcontext from "../store/autcontext";
 
 const Home = () => {
