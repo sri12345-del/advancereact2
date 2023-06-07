@@ -1,18 +1,33 @@
-import React, { Fragment } from "react";
 import classes from "./Header.module.css";
-import mealimg from "../../source/meals.jpg";
-import Button from "./HeaderButton";
-const Header = (props) => {
+import { useDispatch, useSelector } from "react-redux";
+import { authaction } from "../store/index";
+
+const Header = () => {
+  const isauth = useSelector((state) => state.isauth);
+  const dispatch=useDispatch()
+  const logouthandler = () => {
+    dispatch(authaction.loogedout())
+  }
+  
   return (
-    <Fragment>
-      <header className={classes.header}>
-        <h1>ReactMeals</h1>
-        <Button onClick={props.onClick}></Button>
-      </header>
-      <div className={classes["main-image"]}>
-        <img src={mealimg} alt="dish in the table" />
-      </div>
-    </Fragment>
+    <header className={classes.header}>
+      <h1>Redux Auth</h1>
+      {isauth && (
+        <nav>
+          <ul>
+            <li>
+              <a href="/">My Products</a>
+            </li>
+            <li>
+              <a href="/">My Sales</a>
+            </li>
+            <li>
+              <button onClick={logouthandler}>Logout</button>
+            </li>
+          </ul>
+        </nav>
+      )}
+    </header>
   );
 };
 

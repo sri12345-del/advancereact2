@@ -1,22 +1,21 @@
-import { Route } from "react-router-dom";
-import Login from "./pages/Auth";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Layout from "./layout/layout";
+import { Fragment } from 'react';
+import Counter from './components/Counter';
+
+import Header from './components/Header';
+import Auth from './components/Auth';
+import UserProfile from './components/UserProfile';
+import { useSelector } from 'react-redux';
 
 function App() {
+
+  const isauth=useSelector(state=>state.isauth)
   return (
-    <Layout>
-      <Route path="/auth">
-        <Login></Login>
-      </Route>
-      <Route path="/home">
-        <Home></Home>
-      </Route>
-      <Route path="/about">
-        <About></About>
-      </Route>
-    </Layout>
+    <Fragment>
+      <Header></Header>
+      {!isauth && <Auth></Auth>}
+      {isauth && <UserProfile></UserProfile>}
+      <Counter />
+    </Fragment>
   );
 }
 
