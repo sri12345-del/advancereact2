@@ -1,17 +1,13 @@
-import React from "react"
-import MainNav from "./Mainnav"
-import classes from "./home.module.css"
+import { Fragment } from 'react';
+import MainHeader from './MainHeader';
 
 const Layout = (props) => {
-    return (
-        <React.Fragment>
-            <MainNav onClick={props.onClick}>
-            </MainNav>
-            <header className={classes.header}>The Generics</header>
-            <main>{props.children}</main>
-        </React.Fragment>
+  return (
+    <Fragment>
+      <MainHeader />
+      <main>{props.children}</main>
+    </Fragment>
+  );
+};
 
-    )
-}
-
-export default Layout
+export default Layout;

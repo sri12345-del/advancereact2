@@ -1,54 +1,39 @@
-import { Modal } from "react-bootstrap";
-import Cartitemlist from "./cartitemlist";
-import React,{useContext} from "react";
-import Cartcontaxt from "../store/context";
+import { createSlice } from "@reduxjs/toolkit";
 
-const productsArr = [
-  {
-    title: "Colors",
-    price: 100,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-  },
-  {
-    title: "Black and white Colors",
-    price: 50,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-  },
-  {
-    title: "Yellow and Black Colors",
-    price: 70,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-  },
-  {
-    title: "Blue Color",
-    price: 100,
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
-  },
-];
+const cartitemslice = createSlice({
+    name: "item",
+    initialState: { item: [], totalquantity: 0 },
+    reducers: {
+        addcartitem(state, action) {
+            const newitem = action.payload
+            const existingitem = state.item.find(item => item.id === newitem.id)
+            state.totalquantity=state.totalquantity+1
+            if (!existingitem) {
+                state.item.push({
+                    id: newitem.id,
+                    price: newitem.price,
+                    quantity: 1,
+                    totalprice: newitem.price,
+                    name:newitem.title
+                })
+            } else {
+                existingitem.quantity++;
+                existingitem.totalprice=existingitem.totalprice+newitem.price
+            }
+        },
+        removeitem(state, action) {
+            const id = action.payload
+            const existingitem = state.item.find(val => val.id === id)
+            state.totalquantity=state.totalquantity-1
+            if (existingitem.quantity===1) {
+                state.item = state.item.filter(val => val.id == id)
+            } else {
+                existingitem.quantity--
+            }
+        }
+    }
+})
 
-const Cartitem = (props) => {
-  const autctx=useContext(Cartcontaxt)
-  return (
-    <Modal show={props.show} onHide={props.close}>
-      <Modal.Header>
-        <Modal.Title>Cartitem</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Cartitemlist item={productsArr}></Cartitemlist>
-      </Modal.Body>
-      <Modal.Footer style={{display:"flex", justifyContent:"space-between",margin:"0 2rem"}}>
-        <div>
-          <button onClick={props.close} variant="primary">
-            close
-          </button>
-        </div>
-        <div>
-          <span>totalamount : </span>
-          <span style={{border:"2px solid lightblue"}}>{ autctx.totalamount}</span>
-        </div>
-      </Modal.Footer>
-    </Modal>
-  );
-};
+export default cartitemslice
 
-export default Cartitem;
+export const cartitemaction=cartitemslice.actions

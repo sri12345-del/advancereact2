@@ -1,19 +1,12 @@
-import { configureStore ,createSlice} from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
+import cartslice from "./cartslice";
+import cartitemslice from "./cartitem";
 
-const cartslice = createSlice({
-    name: "cart",
-    initialState: { isopen: false },
-    reducers: {
-        cartvisible(state) {
-            state.isopen=!state.isopen
-        }
-    },
-        
-})
+
 const store = configureStore({
-    reducer:cartslice.reducer
+    reducer:{cart:cartslice.reducer,cartitem:cartitemslice.reducer}
 })
 
-export const cartaction=cartslice.actions
+
 
 export default store
