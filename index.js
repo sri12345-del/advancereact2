@@ -1,25 +1,13 @@
-import { createSlice ,configureStore} from "@reduxjs/toolkit"
+import ReactDOM from "react-dom/client";
+import store from "./store/mainstore";
 
-const authnitication={isauth:false}
-const authslice = createSlice({
-    name: "authnitication",
-    initialState: authnitication,
-    reducers: {
-        loogedin(state) {
-            state.isauth = true
-        },
-        loogedout(state) {
-            state.isauth=false
-        }
-    }
-    
-})
-const store = configureStore({
-    reducer:authslice.reducer
-})
+import "./index.css";
+import App from "./App";
+import { Provider } from "react-redux";
 
-export const authaction=authslice.actions
-
-export default store
-
-
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);

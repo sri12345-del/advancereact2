@@ -1,21 +1,16 @@
-import { Fragment } from 'react';
-import Counter from './components/Counter';
-
-import Header from './components/Header';
-import Auth from './components/Auth';
-import UserProfile from './components/UserProfile';
+import Cart from './components/Cart/Cart';
+import Layout from './components/Layout/Layout';
+import Products from './components/Shop/Products';
 import { useSelector } from 'react-redux';
 
 function App() {
 
-  const isauth=useSelector(state=>state.isauth)
+  const cartvisible=useSelector(state=>state.isopen)
   return (
-    <Fragment>
-      <Header></Header>
-      {!isauth && <Auth></Auth>}
-      {isauth && <UserProfile></UserProfile>}
-      <Counter />
-    </Fragment>
+    <Layout>
+      {cartvisible && <Cart />}
+      <Products />
+    </Layout>
   );
 }
 
