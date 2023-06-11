@@ -1,5 +1,9 @@
 import { Button, Card, FloatingLabel, Form } from "react-bootstrap";
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom"
+import { useDispatch } from "react-redux";
+import { authaction } from "../store/authslice";
+
 
 const Login = () => {
   const [issigin, setissigin] = useState(false);
@@ -7,7 +11,11 @@ const Login = () => {
   const [password, setpassword] = useState("");
   const [conformpassword, setconformpasswword] = useState("");
   const [isvalid, setisvalid] = useState(false);
-  const [islooding, setislooding] = useState(false);
+    const [islooding, setislooding] = useState(false);
+
+    const dispatch=useDispatch()
+    
+    const history=useHistory()
 
   const changehandler = () => {
     setissigin(!issigin);
@@ -58,7 +66,7 @@ const Login = () => {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCenENgt4LrLH79u1_uh-2mToo1R_OEeRM";
     } else {
-      url = "";
+      url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCenENgt4LrLH79u1_uh-2mToo1R_OEeRM";
     }
     fetch(url, {
       method: "POST",
@@ -79,7 +87,13 @@ const Login = () => {
           throw new Error("somthing is wrong");
         }
       })
-      .then((data) => console.log(data))
+        .then((data) => {
+            if (issigin) {
+                console.log(data)
+                dispatch(authaction.addtoken())
+                history.replace("/home")
+          }
+      })
           .catch((err) => console.log(err.message));
       setemail("")
       setpassword("")
@@ -87,7 +101,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+      <div>
       <Card style={{ margin: "5rem 33rem", padding: "1rem 1rem" }}>
         <Card.Title style={{ textAlign: "center", fontSize: "250%" }}>
           {issigin ? "Log in" : "Sign up"}
@@ -107,7 +121,7 @@ const Login = () => {
               placeholder="password"
               onChange={passwordhandler}
               minLength="8"
-              value={password}
+                          value={password}
             ></Form.Control>
           </FloatingLabel>
           {!issigin && (
@@ -129,7 +143,10 @@ const Login = () => {
             >
               {issigin ? "Log in" : "Sign up"}
             </Button>
-          </div>
+                  </div>
+                  <div className="d-grid gap-2">
+                      {issigin && <Button variant="link">Forget Password</Button>}
+                  </div>
           {islooding && <p>looding...</p>}
         </Form>
       </Card>

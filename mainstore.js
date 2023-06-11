@@ -1,14 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
-import cartslice from "./cartslice";
-import cartitemslice from "./cartitem";
-import notfyslice from "./notifyslice";
+import { configureStore } from "@reduxjs/toolkit"
+import authslice from "./authslice"
 
 const store = configureStore({
-  reducer: {
-    cart: cartslice.reducer,
-    cartitem: cartitemslice.reducer,
-    notfy: notfyslice.reducer,
-  },
-});
+    reducer:auth=authslice.reducer
+})
 
-export default store;
+export default store

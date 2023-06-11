@@ -1,21 +1,12 @@
-import Mainheader from "./Mainheader"
-import {useHistory} from "react-router-dom"
+import Mainheader from "./mainheader";
 
 const Layout = (props) => {
+  return (
+    <div>
+      <Mainheader></Mainheader>
+      <main>{props.children}</main>
+    </div>
+  );
+};
 
-    const history=useHistory()
-
-    const logouthandler = () => {
-        history.replace("/auth")
-        localStorage.removeItem("key")
-    }
-    return (
-        <div>
-            <Mainheader></Mainheader>
-            {localStorage.getItem("key") && <div><button onClick={logouthandler}>Logout</button></div>}
-            <main>{ props.children}</main>
-        </div>
-    )
-}
-
-export default Layout
+export default Layout;
